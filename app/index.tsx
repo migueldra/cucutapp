@@ -16,14 +16,14 @@ export default function Home() {
   useEffect(() => {
     Animated.timing(bgAnim, {
       toValue: theme.dark ? 1 : 0,
-      duration: 350, // transición más rápida y elegante
+      duration: 350,
       useNativeDriver: false,
     }).start();
   }, [theme.dark]);
 
   const backgroundColor = bgAnim.interpolate({
     inputRange: [0, 1],
-    outputRange: ['#FFFFFF', '#181818'], // blanco a fondo oscuro (ajusta si tu tema usa otro color)
+    outputRange: ['#FFFFFF', '#181818'],
   });
 
   // Animaciones de entrada
@@ -40,7 +40,6 @@ export default function Home() {
   const shopScale = useRef(new Animated.Value(1)).current;
 
   useEffect(() => {
-    // Animaciones de entrada secuenciales
     Animated.sequence([
       Animated.timing(logoFade, {
         toValue: 1,
@@ -303,4 +302,4 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: '#666666',
   },
-}); 
+});

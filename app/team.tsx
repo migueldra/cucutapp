@@ -228,4 +228,4 @@ const styles = StyleSheet.create({
     opacity: 0.8,
     marginTop: 5,
   },
-}); 
+});
