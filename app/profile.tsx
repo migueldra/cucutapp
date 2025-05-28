@@ -9,7 +9,7 @@ export default function Profile() {
   const router = useRouter();
 
   const handleMenuPress = () => {
-    router.push('/under-construction');
+    router.push('/(aux)/under-construction');
   };
 
   return (
@@ -148,4 +148,4 @@ const styles = StyleSheet.create({
     marginLeft: 15,
     fontSize: 16,
   },
-});
+}); 

@@ -4,6 +4,7 @@ import { Dimensions, Image, StyleSheet, Text, View } from 'react-native';
 const { width, height } = Dimensions.get('window');
 
 export default function LoadingScreen() {
+
   return (
     <View style={styles.container}>
       <View style={styles.splitBackground}>
@@ -67,10 +68,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   yearText: {
-    color: '#D4AF37', // gold color
     fontSize: 18,
     fontWeight: 'bold',
     marginBottom: 8,
+    color: '#D4AF37', // gold color
   },
   titleText: {
     color: '#FFFFFF',
