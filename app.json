@@ -4,6 +4,9 @@
     "slug": "cucutapp",
     "version": "1.0.0",
     "orientation": "portrait",
+    "fonts": [
+      "./assets/fonts/JockeyOne-Regular.ttf"
+    ],
     "icon": "./assets/images/icon.png",
     "scheme": "cucutapp",
     "userInterfaceStyle": "automatic",

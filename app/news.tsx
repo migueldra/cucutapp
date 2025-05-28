@@ -1,5 +1,5 @@
 import { Ionicons } from '@expo/vector-icons';
-import { Image, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { Image, ImageBackground, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { useTheme } from '../hooks/useTheme';
 
 export default function News() {
@@ -34,6 +34,13 @@ export default function News() {
 
   return (
     <ScrollView style={[styles.container, { backgroundColor: theme.colors.background }]}>
+      <ImageBackground 
+        source={require('../assets/images/back-scaled 2 (1).png')}
+        style={styles.header}
+        imageStyle={{ opacity: 0.7 }}
+      >
+        <Text style={styles.headerTitle}>NOTICIAS</Text>
+      </ImageBackground>
       {news.map((item) => (
         <TouchableOpacity
           key={item.id}
@@ -82,6 +89,23 @@ export default function News() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+  },
+  header: {
+    height: 150,
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderBottomLeftRadius: 20,
+    borderBottomRightRadius: 20,
+    overflow: 'hidden',
+  },
+  headerTitle: {
+    color: '#FFFFFF',
+    fontSize: 28,
+    fontWeight: 'bold',
+    letterSpacing: 1,
+    textShadowColor: 'rgba(0, 0, 0, 0.75)',
+    textShadowOffset: { width: -1, height: 1 },
+    textShadowRadius: 10
   },
   newsCard: {
     margin: 15,

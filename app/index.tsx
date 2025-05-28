@@ -1,6 +1,6 @@
+import { LinearGradient } from 'expo-linear-gradient';
 import { useRouter } from 'expo-router';
-import { useEffect, useRef } from 'react';
-import { Animated, Dimensions, Image, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { Dimensions, Image, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { useTheme } from '../hooks/useTheme';
 
 const { width, height } = Dimensions.get('window');
@@ -8,298 +8,262 @@ const { width, height } = Dimensions.get('window');
 export default function Home() {
   const { theme } = useTheme();
   const router = useRouter();
-  
-  // Animación para el fondo
-  const bgAnim = useRef(new Animated.Value(0)).current;
-  const prevBg = useRef(theme.colors.background).current;
-
-  useEffect(() => {
-    Animated.timing(bgAnim, {
-      toValue: theme.dark ? 1 : 0,
-      duration: 350,
-      useNativeDriver: false,
-    }).start();
-  }, [theme.dark]);
-
-  const backgroundColor = bgAnim.interpolate({
-    inputRange: [0, 1],
-    outputRange: ['#FFFFFF', '#181818'],
-  });
-
-  // Animaciones de entrada
-  const logoFade = useRef(new Animated.Value(0)).current;
-  const newsFade = useRef(new Animated.Value(0)).current;
-  const newsCard1Fade = useRef(new Animated.Value(0)).current;
-  const newsCard2Fade = useRef(new Animated.Value(0)).current;
-  const shopFade = useRef(new Animated.Value(0)).current;
-
-  // Animaciones de toque
-  const newsScale = useRef(new Animated.Value(1)).current;
-  const newsCard1Scale = useRef(new Animated.Value(1)).current;
-  const newsCard2Scale = useRef(new Animated.Value(1)).current;
-  const shopScale = useRef(new Animated.Value(1)).current;
-
-  useEffect(() => {
-    Animated.sequence([
-      Animated.timing(logoFade, {
-        toValue: 1,
-        duration: 1000,
-        useNativeDriver: true,
-      }),
-      Animated.timing(newsFade, {
-        toValue: 1,
-        duration: 800,
-        useNativeDriver: true,
-      }),
-      Animated.timing(newsCard1Fade, {
-        toValue: 1,
-        duration: 800,
-        useNativeDriver: true,
-      }),
-      Animated.timing(newsCard2Fade, {
-        toValue: 1,
-        duration: 800,
-        useNativeDriver: true,
-      }),
-      Animated.timing(shopFade, {
-        toValue: 1,
-        duration: 800,
-        useNativeDriver: true,
-      }),
-    ]).start();
-  }, []);
-
-  const animatePress = (scaleAnim: Animated.Value) => {
-    Animated.sequence([
-      Animated.spring(scaleAnim, {
-        toValue: 0.95,
-        useNativeDriver: true,
-        speed: 50,
-        bounciness: 4
-      }),
-      Animated.spring(scaleAnim, {
-        toValue: 1,
-        useNativeDriver: true,
-        speed: 50,
-        bounciness: 4
-      })
-    ]).start();
-  };
 
   return (
-    <Animated.ScrollView style={[styles.container, { backgroundColor }]}>
-      {/* Hero Section with Split Background */}
-      <View style={styles.heroSection}>
-        <View style={styles.splitBackground}>
-          <View style={[styles.leftHalf, { backgroundColor: '#000000' }]} />
-          <View style={[styles.rightHalf, { backgroundColor: '#FF0000' }]} />
-        </View>
-        <Animated.View style={[styles.logoContainer, { opacity: logoFade }]}>
+    <ScrollView style={styles.container}>
+      {/* Header with Logos */}
+      <LinearGradient
+        colors={['#FF0000', '#CC0000']}
+        style={styles.header}
+      >
+        <View style={styles.logoContainer}>
           <Image
-            source={require('../assets/images/cucuta_col 1.png')}
-            style={styles.logo}
+            source={require('../assets/images/boman logo dorado 1.png')}
+            style={styles.headerLogo}
             resizeMode="contain"
           />
-        </Animated.View>
-      </View>
+          <Image
+            source={require('../assets/images/cucuta_col 1.png')}
+            style={styles.headerLogo}
+            resizeMode="contain"
+          />
+          <Image
+            source={require('../assets/images/100 años logo 1.png')}
+            style={styles.headerLogo}
+            resizeMode="contain"
+          />
+        </View>
+      </LinearGradient>
 
-      {/* News Section */}
-      <Animated.View style={[styles.newsSection, { opacity: newsFade }]}>
-        <Animated.View style={[styles.newsHeader, { transform: [{ scale: newsScale }] }]}>
-          <TouchableOpacity 
-            onPress={() => animatePress(newsScale)}
-            activeOpacity={0.9}
-          >
-            <Text style={styles.sectionTitle}>Últimas Noticias</Text>
+      {/* Últimos Resultados Section */}
+      <View style={styles.resultsSection}>
+        <Text style={styles.sectionTitle}>Últimos Resultados</Text>
+        <View style={styles.resultsContainer}>
+          <TouchableOpacity style={styles.arrowButton}>
+            <Text style={styles.arrowText}>{'<'}</Text>
           </TouchableOpacity>
-        </Animated.View>
-        
-        <ScrollView 
-          horizontal 
-          showsHorizontalScrollIndicator={false}
-          contentContainerStyle={styles.newsScrollContent}
-        >
-          <Animated.View style={[styles.newsCardContainer, { opacity: newsCard1Fade, transform: [{ scale: newsCard1Scale }] }]}>
-            <TouchableOpacity 
-              style={styles.newsCard}
-              onPress={() => animatePress(newsCard1Scale)}
-              activeOpacity={0.9}
-            >
-              <Image
-                source={require('../assets/images/Jopito Alvarez.png')}
-                style={styles.newsImage}
-              />
-              <View style={styles.newsContent}>
-                <Text style={styles.newsTitle}>
-                  Jopito Álvarez: Nuevo Refuerzo
-                </Text>
-                <Text style={styles.newsDate}>
-                  Hace 2 horas
-                </Text>
-              </View>
-            </TouchableOpacity>
-          </Animated.View>
-          <Animated.View style={[styles.newsCardContainer, { opacity: newsCard2Fade, transform: [{ scale: newsCard2Scale }] }]}>
-            <TouchableOpacity 
-              style={styles.newsCard}
-              onPress={() => animatePress(newsCard2Scale)}
-              activeOpacity={0.9}
-            >
-              <Image
-                source={require('../assets/images/Anaya.png')}
-                style={styles.newsImage}
-              />
-              <View style={styles.newsContent}>
-                <Text style={styles.newsTitle}>
-                  Anaya: Entrevista Exclusiva
-                </Text>
-                <Text style={styles.newsDate}>
-                  Hace 5 horas
-                </Text>
-              </View>
-            </TouchableOpacity>
-          </Animated.View>
-        </ScrollView>
-      </Animated.View>
-
-      {/* Shop Section */}
-      <Animated.View style={[styles.shopSection, { opacity: shopFade }]}>
-        <Animated.View style={{ transform: [{ scale: shopScale }] }}>
-          <TouchableOpacity 
-            style={styles.shopButton}
-            onPress={() => {
-              animatePress(shopScale);
-              router.push('/shop');
-            }}
-            activeOpacity={0.9}
+          
+          <ScrollView 
+            horizontal 
+            showsHorizontalScrollIndicator={false}
+            contentContainerStyle={styles.resultsScroll}
           >
-            <View style={styles.shopContent}>
-              <Image
-                source={require('../assets/images/Uniformes cucuta 1.png')}
-                style={styles.shopImage}
-                resizeMode="contain"
-              />
-              <View style={styles.shopTextContainer}>
-                <Text style={styles.shopTitle}>Compra Nuestras Camisetas</Text>
-                <Text style={styles.shopSubtitle}>¡Únete a la pasión!</Text>
+            <View style={styles.matchCard}>
+              <View style={styles.matchContent}>
+                <Image
+                  source={require('../assets/images/cucuta_col 1.png')}
+                  style={styles.teamLogo}
+                  resizeMode="contain"
+                />
+                <Text style={styles.scoreText}>2-1</Text>
+                <Image
+                  source={require('../assets/images/Union Magdalena 1.png')}
+                  style={styles.teamLogo}
+                  resizeMode="contain"
+                />
               </View>
             </View>
+
+            <View style={styles.matchCard}>
+              <View style={styles.matchContent}>
+                <Image
+                  source={require('../assets/images/pngfind.com-escudo-millonarios-png-3394561 1.png')}
+                  style={styles.teamLogo}
+                  resizeMode="contain"
+                />
+                <Text style={styles.scoreText}>3-3</Text>
+                <Image
+                  source={require('../assets/images/cucuta_col 1.png')}
+                  style={styles.teamLogo}
+                  resizeMode="contain"
+                />
+              </View>
+            </View>
+          </ScrollView>
+
+          <TouchableOpacity style={styles.arrowButton}>
+            <Text style={styles.arrowText}>{'>'}</Text>
           </TouchableOpacity>
-        </Animated.View>
-      </Animated.View>
-    </Animated.ScrollView>
+        </View>
+      </View>
+
+      {/* Galería de la Semana Section */}
+      <View style={styles.gallerySection}>
+        <Text style={styles.sectionTitle}>Galería de la Semana</Text>
+        <View style={styles.galleryGrid}>
+          <View style={styles.galleryCard}>
+            <Image
+              source={require('../assets/images/Anaya.png')}
+              style={styles.galleryImage}
+              resizeMode="cover"
+            />
+            <Text style={styles.playerName}>JULIAN ANAYA</Text>
+          </View>
+          <View style={styles.galleryCard}>
+            <Image
+              source={require('../assets/images/Jopito Alvarez.png')}
+              style={styles.galleryImage}
+              resizeMode="cover"
+            />
+            <Text style={styles.playerName}>JOPITO ALVAREZ</Text>
+          </View>
+        </View>
+      </View>
+
+      {/* Shop Banner */}
+      <TouchableOpacity 
+        style={styles.shopBanner}
+        onPress={() => router.push('/shop')}
+      >
+        <Image
+          source={require('../assets/images/back-scaled 2.png')}
+          style={styles.shopBackground}
+          resizeMode="cover"
+        />
+        <View style={styles.shopContent}>
+          <Image
+            source={require('../assets/images/Uniformes cucuta 1.png')}
+            style={styles.shopImage}
+            resizeMode="contain"
+          />
+          <View style={styles.shopButton}>
+            <Text style={styles.shopButtonText}>COMPRA LA NUEVA{'\n'}INDUMENTARIA</Text>
+          </View>
+        </View>
+      </TouchableOpacity>
+    </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: '#FFFFFF',
+    width: '100%',
   },
-  heroSection: {
-    height: 400,
+  header: {
+    paddingVertical: 15,
+    paddingHorizontal: 10,
+    width: '100%',
+  },
+  logoContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  headerLogo: {
+    width: width * 0.2,
+    height: width * 0.2,
+  },
+  resultsSection: {
+    padding: 10,
+    width: '100%',
+  },
+  sectionTitle: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    marginBottom: 15,
+    color: '#000000',
+  },
+  resultsContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  arrowButton: {
+    padding: 10,
+  },
+  arrowText: {
+    fontSize: 24,
+    color: '#000000',
+  },
+  resultsScroll: {
+    paddingHorizontal: 10,
+  },
+  matchCard: {
+    backgroundColor: '#FF0000',
+    borderRadius: 10,
+    padding: 15,
+    marginHorizontal: 5,
+    width: width * 0.6,
+  },
+  matchContent: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  teamLogo: {
+    width: 50,
+    height: 50,
+  },
+  scoreText: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    color: '#FFFFFF',
+  },
+  gallerySection: {
+    padding: 10,
+    width: '100%',
+  },
+  galleryGrid: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  galleryCard: {
+    width: width * 0.47,
+    borderRadius: 10,
+    overflow: 'hidden',
     position: 'relative',
   },
-  splitBackground: {
+  galleryImage: {
+    width: '100%',
+    height: width * 0.6,
+    borderRadius: 10,
+  },
+  playerName: {
+    position: 'absolute',
+    bottom: 0,
+    left: 0,
+    right: 0,
+    textAlign: 'center',
+    padding: 10,
+    fontSize: 16,
+    fontWeight: 'bold',
+    color: '#FFFFFF',
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+  },
+  shopBanner: {
+    margin: 10,
+    borderRadius: 10,
+    width: width - 20,
+    overflow: 'hidden',
+    height: 150,
+    position: 'relative',
+  },
+  shopBackground: {
     position: 'absolute',
     width: '100%',
     height: '100%',
-    flexDirection: 'row',
-  },
-  leftHalf: {
-    flex: 1,
-  },
-  rightHalf: {
-    flex: 1,
-  },
-  logoContainer: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  logo: {
-    width: width * 0.4,
-    height: width * 0.4,
-  },
-  newsSection: {
-    padding: 20,
-  },
-  newsHeader: {
-    marginBottom: 20,
-  },
-  sectionTitle: {
-    fontSize: 32,
-    fontWeight: 'bold',
-    color: '#000000',
-  },
-  newsScrollContent: {
-    paddingRight: 20,
-  },
-  newsCardContainer: {
-    marginRight: 15,
-  },
-  newsCard: {
-    width: 300,
-    borderRadius: 20,
-    overflow: 'hidden',
-    backgroundColor: '#FFFFFF',
-    elevation: 8,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.3,
-    shadowRadius: 4.65,
-  },
-  newsImage: {
-    width: '100%',
-    height: 180,
-  },
-  newsContent: {
-    padding: 15,
-  },
-  newsTitle: {
-    fontSize: 18,
-    fontWeight: 'bold',
-    color: '#000000',
-    marginBottom: 5,
-  },
-  newsDate: {
-    fontSize: 14,
-    color: '#666666',
-  },
-  shopSection: {
-    padding: 20,
-    marginTop: 10,
-  },
-  shopButton: {
-    backgroundColor: '#FFFFFF',
-    borderRadius: 20,
-    elevation: 8,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.3,
-    shadowRadius: 4.65,
-    overflow: 'hidden',
   },
   shopContent: {
     flexDirection: 'row',
     alignItems: 'center',
+    justifyContent: 'space-between',
     padding: 15,
+    height: '100%',
   },
   shopImage: {
     width: width * 0.3,
     height: width * 0.3,
   },
-  shopTextContainer: {
-    flex: 1,
-    marginLeft: 15,
+  shopButton: {
+    backgroundColor: '#FFFFFF',
+    borderRadius: 5,
+    padding: 10,
+    marginLeft: 10,
   },
-  shopTitle: {
-    fontSize: 20,
+  shopButtonText: {
+    color: '#FF0000',
     fontWeight: 'bold',
-    color: '#000000',
-    marginBottom: 4,
-  },
-  shopSubtitle: {
-    fontSize: 14,
-    color: '#666666',
+    textAlign: 'center',
   },
 });
