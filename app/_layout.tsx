@@ -25,7 +25,7 @@ export default function Layout() {
   useEffect(() => {
     const timer = setTimeout(() => {
       setIsLoading(false);
-    }, 6000); // 6 seconds
+    }, 2000); // 6 seconds
 
     return () => clearTimeout(timer);
   }, []);
